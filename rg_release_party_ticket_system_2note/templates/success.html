@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card ticket">
+    <div class="eyebrow">{% if already %}TICKET GIÀ REGISTRATO{% else %}TICKET CONFERMATO{% endif %}</div>
+    <h1>{{ event.name }}</h1>
+
+    <div class="ticket-code">{{ ticket.ticket_code }}</div>
+
+    <div class="details">
+        <p>Nome: {{ ticket.name }}</p>
+        <p>{{ event.date }}</p>
+        <p>{{ event.time }}</p>
+        <p>{{ event.location }}</p>
+    </div>
+
+    <p class="note">
+        Mostra questo codice all'ingresso.
+        {% if ticket.whatsapp_status == "sent" %}
+            Il ticket è stato inviato anche su WhatsApp.
+        {% elif ticket.whatsapp_status == "disabled" %}
+            WhatsApp automatico non è ancora attivo, ma il ticket è valido.
+        {% else %}
+            Registrazione salvata. Se WhatsApp non arriva, usa questo codice.
+        {% endif %}
+    </p>
+</section>
+{% endblock %}

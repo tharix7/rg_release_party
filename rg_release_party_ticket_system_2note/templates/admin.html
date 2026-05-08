@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="admin">
+    <div class="admin-top">
+        <div>
+            <h1>Admin — {{ event.name }}</h1>
+            <p>{{ total }} iscritti / {{ event.max_capacity }} capienza · {{ checked }} check-in</p>
+        </div>
+        <div class="actions">
+            <a href="{{ url_for('export_csv') }}">Esporta CSV</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+
+    <form method="get" class="search">
+        <input name="q" value="{{ q }}" placeholder="Cerca nome, numero o codice">
+        <button type="submit">Cerca</button>
+    </form>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Telefono</th>
+                    <th>Codice</th>
+                    <th>Data</th>
+                    <th>WhatsApp</th>
+                    <th>Check-in</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tickets %}
+                <tr class="{{ 'checked' if t.checked_in else '' }}">
+                    <td>{{ t.id }}</td>
+                    <td>{{ t.name }}</td>
+                    <td>{{ t.phone }}</td>
+                    <td><strong>{{ t.ticket_code }}</strong></td>
+                    <td>{{ t.created_at }}</td>
+                    <td>{{ t.whatsapp_status }}</td>
+                    <td>
+                        {% if t.checked_in %}
+                            <form method="post" action="{{ url_for('undo_checkin', ticket_code=t.ticket_code) }}">
+                                <button class="secondary" type="submit">Annulla</button>
+                            </form>
+                        {% else %}
+                            <form method="post" action="{{ url_for('checkin', ticket_code=t.ticket_code) }}">
+                                <button type="submit">Check-in</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

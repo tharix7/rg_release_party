@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <div class="eyebrow">RSVP / TICKET</div>
+    <h1>{{ event.name }}</h1>
+
+    <div class="details">
+        <p>{{ event.date }}</p>
+        <p>{{ event.time }}</p>
+        <p>{{ event.location }}</p>
+    </div>
+
+    <div class="capacity">
+        Posti rimasti: <strong>{{ remaining }}</strong> / {{ event.max_capacity }}
+    </div>
+
+    {% if remaining > 0 %}
+    <form method="post" class="form">
+        <label>
+            Nome / nickname
+            <input name="name" type="text" placeholder="Es. Alessandro" required>
+        </label>
+
+        <label>
+            Numero WhatsApp
+            <input name="phone" type="tel" placeholder="Es. +393331234567" required>
+        </label>
+
+        <label class="check">
+            <input type="checkbox" name="privacy" value="yes" required>
+            <span>Accetto di ricevere il ticket su WhatsApp e il trattamento dei dati per la gestione dell'evento.</span>
+        </label>
+
+        <button type="submit">Ricevi ticket</button>
+    </form>
+    {% else %}
+        <div class="soldout">Lista piena.</div>
+    {% endif %}
+</section>
+{% endblock %}
