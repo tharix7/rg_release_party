@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 {% block content %}
 <section class="card">
@@ -10,31 +11,18 @@
         <p>{{ event.location }}</p>
     </div>
 
-    <div class="capacity">
-        Posti rimasti: <strong>{{ remaining }}</strong> / {{ event.max_capacity }}
-    </div>
-
-    {% if remaining > 0 %}
     <form method="post" class="form">
         <label>
-            Nome / nickname
-            <input name="name" type="text" placeholder="Es. Alessandro" required>
+            Nome
+            <input name="name" type="text" placeholder="Es. Alessandro Rossi" required>
         </label>
 
         <label>
-            Numero WhatsApp
-            <input name="phone" type="tel" placeholder="Es. +393331234567" required>
+            Numero di telefono
+            <input name="phone" type="tel" placeholder="Es. 333 123 4567" required>
         </label>
 
-        <label class="check">
-            <input type="checkbox" name="privacy" value="yes" required>
-            <span>Accetto di ricevere il ticket su WhatsApp e il trattamento dei dati per la gestione dell'evento.</span>
-        </label>
-
-        <button type="submit">Ricevi ticket</button>
+        <button type="submit">RICEVI TICKET</button>
     </form>
-    {% else %}
-        <div class="soldout">Lista piena.</div>
-    {% endif %}
 </section>
 {% endblock %}
